@@ -9,98 +9,14 @@
  
 ---
 
-### **Take-Home Assignment: Data Review, Editor, and Exporter**
+### **Take-Home Assignment: Daniel Schwartz Approach, Assumptions, Improvements**
 
-**Objective**: Build a data review interface that queries JSON data from a Next.js API, displays the data in a table format with validation errors, and allows users to export the data in CSV format. You will also color-code validation errors and provide error details in an interactive way.
+**Approach**: At my daily work I use Angular and Bootstrap, so I chose to use React Bootstrap as I thought I would already have some familiarity with the components supported by the library. In React, bootstrap works a bit different with the way components interact with each other, so I think in hindsight it may have been better to choose a different library. The first thing I implemented was the data query, which I setup using the fetch method in a useEffect hook. I did not see any fields in the mock data that were not flatened, so I did not do any major processing of the response. For the table, I used bootstrap and tried to pick color shadings of the cells that were not too overwhelming. The hoverable error messages went through a few iterations, I was not satisfied with the built in tooltips, so I used a popover, which I think displayed the errors more clearly, but it had some issues with its placement. For the modal, I used a popout icon in the error column of the table, which was clickable to display the modal. Lastly, the download csv link uses react-csv and simply creates a csv file called dashboardData.csv. Throughout the dashboard file, I used a few different helper components to separate different logics, and I created interfaces that represented the props for these components.
 
-**Deliverables**:
+![dashboardpopover](data-review-assignment/public/assets/dashboardpopover.png)
+![dashboardmodal](data-review-assignment/public/assets/dashboardmodal.png)
+![dashboardcsv](data-review-assignment/public/assets/dashboardcsv.png)
 
-1. **Data Query from API**: Implement a Next.js API route that returns the provided mock JSON data (attached below).
-2. **Data Review Table**:
-    - Display the data in a table, flattening any nested fields (e.g., `address`) into separate columns (e.g., `Street`, `City`, `Zipcode`).
-    - Color-code validation errors in each column according to severity:
-        - Red for critical errors (must be fixed).
-        - Yellow for warnings (should be reviewed).
-        - Green for valid fields.
-    - **Hoverable Error Messages**: Each cell with a validation error should display the error message on hover as a tooltip.
-    - **Error Summary Modal**: Include an "Error Summary" modal with a clickable button or link that opens a modal. This modal should list all the validation errors for that specific row, with details for each error.
-3. **CSV Export**: Allow users to export the data to a CSV format.
+**Assumptions**: When thinking of a design for this dashboard, I envisoned the dashboard as a tool for validating data responses from APIs. I used a pastel color background for the cells, so that the severity level of the errors were quickly visible, while maintaining the readability of the data in each cell. For the export to csv functionality, I converted the errors to a string, so that they would show up properly.
 
-
-**Design Considerations**:
-
-- **No Figma Provided**: We have deliberately not provided Figma or design assets for this project. This is to give you the freedom to design the table and modals as you see fit. Part of the evaluation will be based on your ability to create a user-friendly, intuitive UI without strict design guidelines. You're free to choose the best layout, color schemes, and UX patterns, and UI Libraries that fit the task.
-
-
-**Mock Data**: You will be working with the following mock JSON data. The data will always follow a static model. Your API should serve this data to the frontend:
-
-```json
-{
-  "records": [
-    {
-      "id": 1,
-      "name": "John Doe",
-      "email": "john.doe@example.com",
-      "street": "123 Main St",
-      "city": "New York",
-      "zipcode": "12345",
-      "phone": "123-456-7890",
-      "status": "active",
-      "errors": {
-        "phone": {
-          "message": "Invalid phone format",
-          "severity": "critical"
-        },
-        "zipcode": {
-          "message": "Invalid zipcode",
-          "severity": "warning"
-        }
-      }
-    },
-    {
-      "id": 2,
-      "name": "Jane Smith",
-      "email": "jane.smith@sample",
-      "street": "456 Elm St",
-      "city": "Los Angeles",
-      "zipcode": "",
-      "phone": "987-654-3210",
-      "status": "inactive",
-      "errors": {
-        "email": {
-          "message": "Invalid email format",
-          "severity": "critical"
-        },
-        "zipcode": {
-          "message": "Zipcode is missing",
-          "severity": "critical"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "name": "Alice Johnson",
-      "email": "alice.johnson@example.com",
-      "street": "",
-      "city": "Chicago",
-      "zipcode": "60614",
-      "phone": "111-222-3333",
-      "status": "pending",
-      "errors": {
-        "street": {
-          "message": "Street address is missing",
-          "severity": "warning"
-        }
-      }
-    }
-  ]
-}
-
-```
-
-**Expectations**:
-
-- **Tech Stack**: Use **Next.js** for API and server-side rendering, React for frontend components. Styling can be done with **Tailwind CSS** or your **UI library of choice**.
-- **Time Estimation**: This assignment should take 4–6 hours to complete.
-- **Submission**: Please fork this repo, and provide a GitHub repo link containing your code, with a README explaining your approach, assumptions, and any improvements you would make given more time.
-
+**Improvements**: The biggest improvement I would work on given more time, would be to work on the popover tooltip more. I would have liked to further design this popover and potentially include icons to easily represent error severity and provide clarity. Additionally, I would also rework the component because the library I ended up using had some weird graphical glitches such as the inital placement of the popover not being set correctly. Also, I experimented with a few different color patterns for the table, and given more time I would probably change those as well.
